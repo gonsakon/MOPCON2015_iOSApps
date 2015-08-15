@@ -13,26 +13,21 @@ angular.module('starter.services', [])
       getObject: function(key) {
         return JSON.parse($window.localStorage[key] || '{}');
       },
-      setImage: function() {
-
+      removeItem: function(key) {
+        $window.localStorage.removeItem(key);
       },
-      getImage: function() {
-
-      },
-      removeAllJson: function(){
+      removeAll: function() {
         for(key in $window.localStorage) {
-          if(key.search(/^img\./)==-1) {
-            $window.localStorage.removeItem(key);
-          }
-        }
-      },
-      removeAllImage: function() {
-        for(key in $window.localStorage) {
-          if(key.search(/^img\./)!=-1) {
-            $window.localStorage.removeItem(key);
-          }
+           $window.localStorage.removeItem(key);
         }
       }
+      // removeExpRegItem: function(expReg) {
+      //   for(key in $window.localStorage) {
+      //     if(key.match(expReg)) {
+      //       $window.localStorage.removeItem(key);
+      //     }
+      //   }
+      // }
     }
   }])
   .factory('loadingServ', function($ionicLoading) {
@@ -81,9 +76,9 @@ angular.module('starter.services', [])
           .success( function(jsonData, status, headers, config) {
             if(jsonData.isSucc !== undefined
                 && jsonData.isSucc==true
-                && jsonData.server.appVersion == $rootScope.version) {
+                && jsonData.server.appVersion == app.customConfig.version) {
               //清除原本的資料
-              localStorageServ.removeAllJson();
+              localStorageServ.removeAll();
               localStorageServ.set('last.isSucc',true);
               localStorageServ.set('last.saveLocalTime',localTime);
               if(jsonData.server.serverTime!=undefined) {
@@ -133,28 +128,24 @@ angular.module('starter.services', [])
             }
             else {
               localStorageServ.set('last.isSucc',false);
-              if(jsonData.server.app_version != $rootScope.version)
-              {
+              if(jsonData.server.app_version != app.customConfig.version) {
                 localStorageServ.set('last.errCode','E001');
               }
-              else
-              {
-                if(jsonData.errCode!==undefined)
-                {
+              else {
+                if(jsonData.errCode!==undefined) {
                   localStorageServ.set('last.errCode',jsonData.errCode);
                 }
               }
             }
           })
-          .error( function(data, status, headers, xhr){
-            if(status===undefined) //資料異常，可能是json格式錯誤
-            {
+          .error( function(data, status, headers, xhr) {
+            if(status===undefined) { //資料異常，可能是json格式錯誤
               status = 404;
             }
             localStorageServ.set('last.isSucc',false);
             localStorageServ.set('last.errCode',status);
           })
-          .finally( function(){
+          .finally( function() {
             localStorageServ.set('last.statusLocalTime',localTime);
             $rootScope.isSucc = localStorageServ.get('last.isSucc');
             //TODO 要提供 isSucc==false 的相關處理

@@ -1,5 +1,9 @@
-<ion-view view-title="首頁">
-	<ion-content>
-		<h1>Index</h1>
-	</ion-content>
+<ion-view view-title="{{title}}">
+  <ion-content>
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+    <ng-include src="'templates/_articleView.html'"></ng-include>
+  </ion-content>
 </ion-view>

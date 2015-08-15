@@ -1,0 +1,37 @@
+<div ng-repeat="row in data.article">
+  <div ng-if="row.viewType=='section'" class="card">
+    <div class="item item-image" ng-if="row.image">
+      <img ng-src="{{row.image}}">
+    </div>
+    <div class="item">
+      <h2>{{row.title}}</h2>
+      <p>{{row.subTitle}}</p>
+    </div>
+    
+    <div class="item item-body">
+      <p ng-bind-html="row.content">
+      </p>
+    </div>
+    <ng-include ng-if="row.link" src="'templates/_linkView.html'"></ng-include>
+  </div>
+  <div ng-if="row.viewType=='card'">
+    <div class="item item-thumbnail-left item-text-wrap">
+    <img ng-src="{{row.image}}">
+      <h2>{{row.title}}</h2>
+      <h3 ng-if="row.subTitle != ''">{{row.subTitle}}</h3>
+      <p ng-bind-html="row.content"></p>
+      <ng-include ng-if="row.link" src="'templates/_linkView.html'">
+      </ng-include>
+    </div>
+    
+  </div>
+  <div class="card" ng-if="row.viewType=='image'">
+    <a class="item item-image" ng-href="{{row.link}}">
+      <img ng-src="{{row.image}}">
+    </a>
+    <div class="item item-text-wrap" ng-bind-html="row.content">
+      
+    </div>
+  </div>
+</div>
+

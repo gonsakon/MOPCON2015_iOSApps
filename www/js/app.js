@@ -1,3 +1,4 @@
+'use strict';
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -5,23 +6,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-
-//angular.module.config 無法撈取 $rootScope，只好寫在這裡
-var customConfig = {};
-//與後端 json 對應的版本控制
-customConfig.version = 2;
-//選單列表(白名單)，實際顯示的選單由 json 控制
-customConfig.menulists = {
-  "news":"即時訊息",
-  "session":"議程",
-  "sponsor":"贊助",
-  "speaker":"講者",
-  "location":"交通指南",
-  "community":"社群"
-};
-
-angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
-  .run(function($ionicPlatform,$rootScope) {
+var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+  .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -33,11 +19,22 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
         StatusBar.styleDefault();
       }
     });
-    $rootScope.version = customConfig.version;
-    $rootScope.menulists = customConfig.menulists;
   })
 
   .config(function($stateProvider, $urlRouterProvider) {
+    app.customConfig = {};
+    //與後端 json 對應的版本控制
+    app.customConfig.version = 2;
+    //選單列表(白名單)，實際顯示的選單由 json 控制
+    app.customConfig.menulists = {
+      "news":"即時訊息",
+      "session":"議程",
+      "sponsor":"贊助",
+      "speaker":"講者",
+      "location":"交通指南",
+      "community":"社群"
+    };
+
     $stateProvider
       .state('app', {
         url: "/app",
@@ -54,7 +51,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
           }
         }
       });
-    for(key in customConfig.menulists)
+    for(var key in app.customConfig.menulists)
     {
       if(key == 'app') { //以防萬一
         continue;
@@ -69,8 +66,9 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services'])
           }
         }
       });
+     
 
     }
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/news');
+    $urlRouterProvider.otherwise('/app/location');
   });

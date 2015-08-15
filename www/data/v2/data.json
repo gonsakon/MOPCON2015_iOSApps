@@ -15,7 +15,6 @@
     "slogan":"堅持，在濁水溪以南"
   },
   "menu":[
-    "news",
     "session",
     "sponsor",
     "speaker",
@@ -197,11 +196,13 @@
       },
       "article": [
         {
+          "viewType": "section",
           "image": "http://mopcon.org/2015/images/location/icck_01.JPG",
           "title": "高鐵/火車/捷運",
           "content": "<ol><li>左營高鐵站/高雄火車站搭捷運紅線</li><li>2.至捷運美麗島站換乘橘線往西子灣方向</li><li>3.捷運鹽埕埔站下車，二號出口步行約 250 公尺可至會場</li></ol>"
         },
         {
+          "viewType": "section",
           "image": null,
           "title": "公車",
           "content": "歷史博物館0南(單邊停靠)、0北(單邊停靠)、11、25、33、56、60、76、77、82、建國幹線、91、214、219、248"
@@ -211,6 +212,7 @@
     "community":{
       "article": [
         {
+          "viewType": "card",
           "title": "KSDG",
           "image": "http://mopcon.org/2015/images/community/ksdg.png",
           "link": {
@@ -221,6 +223,7 @@
           "content": "Kaohsiung Software Developer Group 是高雄從事軟體開發、網路技術開發者一起交流的園地，2012/05首度聚會活動。<br>目前每月舉辦 Meet-up 及 Web Course 各一場，交流主題涵蓋各種軟體技術，歡迎對軟體開發技術有興趣的朋友可以踴躍參與。"
         },
         {
+          "viewType": "card",
           "title": "CocoaHeads Kaohsiung",
           "image": "http://mopcon.org/2015/images/community/cocoaheads.jpg",
           "link": {
@@ -231,6 +234,7 @@
           "content": "CocoaHeads Kaohsiung 定位為南台灣 Mac/iOS 開發者的固定聚會。聚會不定期邀請各地講者與會員特定主題或經驗分享。<br>您可能會遇到：開發者在聚會上分享各自的心得與點子。<br>也可能會遇到：開發者在聚會上與使用者面對面溝通，與其他開發人員面對面分享。<br>您可能會在此找到新合作夥伴或更有挑戰性的工作、甚至新的商機。"
         },
         {
+          "viewType": "card",
           "title": "MOSUT",
           "image": "http://mopcon.org/2015/images/community/mosut.png",
           "link": {
@@ -241,6 +245,7 @@
           "content": "MOSUT (Meet Open Source Users in Tainan) 是一群生活在台南、對資訊科技有熱情的朋友共同發起的聚會。 關注開放標準/開放規格、自由軟體 / 開放原始碼，進而到開放硬體等議題。<br>每兩周舉辦一次聚會，提供大學院校、公司團體，以及個人作技術討論交流的機會。"
         },
         {
+          "viewType": "card",
           "title": "KIMU",
           "image": "http://mopcon.org/2015/images/community/kimu.jpg",
           "link": {
@@ -251,6 +256,7 @@
           "content": "高雄獨立遊戲開發者聚會(Kaohsiung Indies Meet Up)，簡稱KIMU。2012年由中山大學促進產業發展研究中心協助成立。 是一個以高雄為活動據點，推動南臺灣獨立遊戲開發國際化與相關產業活動的非營利性社群組織。"
         },
         {
+          "viewType": "card",
           "title": "KaLUG",
           "image": "http://mopcon.org/2015/images/community/kalug.png",
           "link": {
@@ -261,6 +267,7 @@
           "content": "Kaohsiung Linux User Group (KaLUG) 是由一群熱愛 open source / free software 的高雄人所組成的團體。 平日討論的主題有 Linux, Debian, Ubuntu, Vim, Emacs, Git, Python, shell script, Drupal, OpenStreetMap, Security ... 等。"
         },
         {
+          "viewType": "card",
           "title": "高雄前端社群",
           "image": "http://mopcon.org/2015/images/community/kf2e.jpg",
           "link": {
@@ -271,6 +278,7 @@
           "content": "高雄前端社群於2013年3月31日創立， 每月固定舉辦前端主題聚會，歡迎網頁設計師一塊前來交流"
         },
         {
+          "viewType": "card",
           "title": "Mobile Girls",
           "image": "http://mopcon.org/2015/images/community/mobile_girls.jpg",
           "link": {
@@ -281,6 +289,7 @@
           "content": "Mobile Girls 是由一群熱愛 iOS 與 Android 朋友所成立的社群，宗旨是希望能夠推廣 iOS/Android 程式語言給女性初學者，讓想了解 iOS 和 Android 的女性能有一個機會學習。我們歡迎沒有電腦程式設計基礎的女性朋友來參加，如果您對於 iOS/Android 的任何新奇有趣的 App 設計、原理及應用感到興趣，您將可以在這個環境找到同好，並藉由業界專業教練的指導，在小組內共同合作打造它，實現您在 App 世界的專屬夢想！"
         },
         {
+          "viewType": "card",
           "title": "Android 高雄開發者社群",
           "image": "http://mopcon.org/2015/images/community/akdg.png",
           "link": {

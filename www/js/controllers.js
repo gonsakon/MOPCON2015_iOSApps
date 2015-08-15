@@ -3,17 +3,16 @@ angular.module('starter.controllers', [])
     getDataServ.refreshAllData().then(function(){
       $scope.menulists = [];
       var localMenu = getDataServ.getMenu();
-      //customConfig 在 root 上，所以就不用 $rootScope 了 (少一層雙向綁定)
-      if(customConfig.menulists === undefined){
+      if(app.customConfig.menulists === undefined){
         //TODO 異常
       }
       for(key in localMenu){
         var item = localMenu[key];
-        if(customConfig.menulists[item] !== undefined)
+        if(app.customConfig.menulists[item] !== undefined)
         {
           $scope.menulists.push({
             "url": item,
-            "title": customConfig.menulists[item]
+            "title": app.customConfig.menulists[item]
           });
         }
       }
@@ -34,14 +33,54 @@ angular.module('starter.controllers', [])
 
   })
   .controller('speakerCtrl', function($scope, getDataServ) {
-
+    var key = "speaker";
+    $scope.title = app.customConfig.menulists[key];
+    $scope.data = getDataServ.getCtrlData(key);
+    $scope.doRefresh = function() {
+      getDataServ.refreshAllData().then(function() {
+        // Stop the ion-refresher from spinning
+        $scope.title = app.customConfig.menulists[key];
+        $scope.data = getDataServ.getCtrlData(key);
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+    };
   })
   .controller('sponsorCtrl', function($scope, getDataServ) {
-
+    var key = "sponsor";
+    $scope.title = app.customConfig.menulists[key];
+    $scope.data = getDataServ.getCtrlData(key);
+    $scope.doRefresh = function() {
+      getDataServ.refreshAllData().then(function() {
+        // Stop the ion-refresher from spinning
+        $scope.title = app.customConfig.menulists[key];
+        $scope.data = getDataServ.getCtrlData(key);
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+    };
   })
   .controller('locationCtrl', function($scope, getDataServ) {
-
+    var key = "location";
+    $scope.title = app.customConfig.menulists[key];
+    $scope.data = getDataServ.getCtrlData(key);
+    $scope.doRefresh = function() {
+      getDataServ.refreshAllData().then(function() {
+        // Stop the ion-refresher from spinning
+        $scope.title = app.customConfig.menulists[key];
+        $scope.data = getDataServ.getCtrlData(key);
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+    };
   })
   .controller('communityCtrl', function($scope, getDataServ) {
-
+    var key = "community";
+    $scope.title = app.customConfig.menulists[key];
+    $scope.data = getDataServ.getCtrlData(key);
+    $scope.doRefresh = function() {
+      getDataServ.refreshAllData().then(function() {
+        // Stop the ion-refresher from spinning
+        $scope.title = app.customConfig.menulists[key];
+        $scope.data = getDataServ.getCtrlData(key);
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+    };
   });
