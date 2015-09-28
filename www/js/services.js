@@ -1,23 +1,32 @@
-angular.module('starter.services', [])
-  .factory('localStorageServ', ['$window', function($window) {
+'use strict';
+
+(function(){
+
+  angular
+    .module('mopconApp.services', [])
+    .factory('localStorageServ', ['$window', localStorageServ])
+    .factory('loadingServ', ['$ionicLoading', loadingServ])
+    .factory('getDataServ', ['$http','loadingServ','localStorageServ','$rootScope', 'appParam', getDataServ]);
+
+  function localStorageServ($window) {
     return {
-      set: function(key, value) {
+      "set": function(key, value) {
         $window.localStorage[key] = value;
       },
-      get: function(key, defaultValue) {
+      "get": function(key, defaultValue) {
         return $window.localStorage[key] || defaultValue;
       },
-      setObject: function(key, value) {
+      "setObject": function(key, value) {
         $window.localStorage[key] = JSON.stringify(value);
       },
-      getObject: function(key) {
+      "getObject": function(key) {
         return JSON.parse($window.localStorage[key] || '{}');
       },
-      removeItem: function(key) {
+      "removeItem": function(key) {
         $window.localStorage.removeItem(key);
       },
-      removeAll: function() {
-        for(key in $window.localStorage) {
+      "removeAll": function() {
+        for(var key in $window.localStorage) {
            $window.localStorage.removeItem(key);
         }
       }
@@ -28,55 +37,56 @@ angular.module('starter.services', [])
       //     }
       //   }
       // }
-    }
-  }])
-  .factory('loadingServ', function($ionicLoading) {
+    };
+  }
+  function loadingServ($ionicLoading) {
     var Service = {
-      show: function() {
+      "show": function() {
         //TODO 未完成
         return $ionicLoading.show({
-          template:  "<div id='mopcon-loading'><img src='img/loading2.svg'></div>",
-          animation: 'fade-in',
-          showBackdrop: true,
-          maxWidth: 200,
-          showDelay: 0
+          "template":  "<div id='mopcon-loading'><img src='img/loading2.svg'></div>", 
+          "animation": 'fade-in',
+          "showBackdrop": true,
+          "maxWidth": 200,
+          "showDelay": 0
         });
       },
-      hide: function() {
+      "hide": function() {
         return $ionicLoading.hide();
       }
     };
     return Service;
-  })
-  .factory('getDataServ', function($http,loadingServ,localStorageServ,$rootScope) {
+  }
+  function getDataServ($http, loadingServ, localStorageServ, $rootScope, appParam) {
     var Service = {
-      getMenu: function() {
+      "getMenu": function() {
         return localStorageServ.getObject('menu');
       },
-      getMopconInfo: function() {
+      "getMopconInfo": function() {
         return localStorageServ.getObject('mopconInfo');
       },
-      getServerInfo: function() {
+      "getServerInfo": function() {
         return localStorageServ.getObject('server');
       },
-      getLastUpdateStatus: function() {
+      "getLastUpdateStatus": function() {
         var last = {};
         last.isSucc = localStorageServ.get('isSucc');
         last.saveLocalTime = localStorageServ.get('saveLocalTime');
         last.saveServerTime = localStorageServ.get('saveServerTime');
         return last;
       },
-      getCtrlData: function(ctrl) {
+      "getCtrlData": function(ctrl) {
         return localStorageServ.getObject('data.'+ctrl);
       },
-      refreshAllData: function() {
+      "refreshAllData": function() {
         loadingServ.show();
         var localTime = new Date().getTime();
         var returnObj = $http.get("data/v2/data.json")
           .success( function(jsonData, status, headers, config) {
+
             if(jsonData.isSucc !== undefined
                 && jsonData.isSucc==true
-                && jsonData.server.appVersion == app.customConfig.version) {
+                && jsonData.server.appVersion == appParam.version) {
               //清除原本的資料
               localStorageServ.removeAll();
               localStorageServ.set('last.isSucc',true);
@@ -88,7 +98,7 @@ angular.module('starter.services', [])
               localStorageServ.setObject('server',jsonData.server);
               localStorageServ.setObject('mopconInfo',jsonData.mopconInfo);
               localStorageServ.setObject('menu',jsonData.menu);
-              for(key in jsonData.data) {
+              for(var key in jsonData.data) {
                 localStorageServ.setObject('data.'+key,jsonData.data[key]);
               }
               //整理 sessionDetail 資料，依照 id 排序
@@ -128,7 +138,7 @@ angular.module('starter.services', [])
             }
             else {
               localStorageServ.set('last.isSucc',false);
-              if(jsonData.server.app_version != app.customConfig.version) {
+              if(jsonData.server.app_version != appParam.version) {
                 localStorageServ.set('last.errCode','E001');
               }
               else {
@@ -146,6 +156,7 @@ angular.module('starter.services', [])
             localStorageServ.set('last.errCode',status);
           })
           .finally( function() {
+            
             localStorageServ.set('last.statusLocalTime',localTime);
             $rootScope.isSucc = localStorageServ.get('last.isSucc');
             //TODO 要提供 isSucc==false 的相關處理
@@ -155,4 +166,5 @@ angular.module('starter.services', [])
       }
     };
     return Service;
-  });
+  }
+})();

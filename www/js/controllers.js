@@ -1,86 +1,109 @@
-angular.module('starter.controllers', [])
-  .controller('appCtrl', function($scope,getDataServ) {
+'use strict';
+
+(function(){
+
+  angular
+    .module('mopconApp.controllers', [])
+    .controller('appCtrl', ['$scope', 'getDataServ', 'appParam', appCtrl])
+    .controller('sessionCtrl', ['$scope', 'getDataServ', 'appParam', sessionCtrl])
+    .controller('sessionDetailCtrl', ['$scope', '$stateParams', 'getDataServ', 'appParam', sessionDetailCtrl])
+    .controller('newsCtrl', ['$scope', 'getDataServ', 'appParam', newsCtrl])
+    .controller('speakerCtrl', ['$scope', 'getDataServ', 'appParam', speakerCtrl])
+    .controller('sponsorCtrl', ['$scope', 'getDataServ', 'appParam', sponsorCtrl])
+    .controller('locationCtrl', ['$scope', 'getDataServ', 'appParam', locationCtrl])
+    .controller('communityCtrl', ['$scope', 'getDataServ', 'appParam', communityCtrl]);
+
+  function appCtrl($scope, getDataServ, appParam) {
+    var vm = $scope;
+    vm.menulists = [];
     getDataServ.refreshAllData().then(function(){
-      $scope.menulists = [];
       var localMenu = getDataServ.getMenu();
-      if(app.customConfig.menulists === undefined){
+      if(appParam.menulists === undefined){
         //TODO 異常
       }
-      for(key in localMenu){
+      for(var key in localMenu){
         var item = localMenu[key];
-        if(app.customConfig.menulists[item] !== undefined)
+        if(appParam.menulists[item] !== undefined)
         {
-          $scope.menulists.push({
+          vm.menulists.push({
             "url": item,
-            "title": app.customConfig.menulists[item]
+            "title": appParam.menulists[item]
           });
         }
       }
     });
-  })
-  .controller('sessionCtrl', function($scope, getDataServ) {
+  }
+  function sessionCtrl($scope, getDataServ, appParam) {
+    var vm = $scope;
     var sessionData = getDataServ.getCtrlData('session');
-    $scope.sessionData = sessionData;
-  })
-  .controller('sessionDetailCtrl', function($scope, $stateParams, getDataServ) {
+    
+    vm.sessionData = sessionData;
+  }
+  function sessionDetailCtrl($stateParams, getDataServ, appParam) {
+    var vm = $scope;
     var sessionData = getDataServ.getCtrlData('sessionDetail');
-    $scope.detail = {};
+    vm.detail = {};
     if(sessionData["no"+$stateParams.id] !== undefined){
-      $scope.detail = sessionData["no"+$stateParams.id];
+      vm.detail = sessionData["no"+$stateParams.id];
     }
-  })
-  .controller('newsCtrl', function($scope, getDataServ) {
-
-  })
-  .controller('speakerCtrl', function($scope, getDataServ) {
+  }
+  function speakerCtrl($scope, getDataServ, appParam) {
+    var vm = $scope;
     var key = "speaker";
-    $scope.title = app.customConfig.menulists[key];
-    $scope.data = getDataServ.getCtrlData(key);
-    $scope.doRefresh = function() {
+    vm.title = appParam.menulists[key];
+    vm.data = getDataServ.getCtrlData(key);
+    vm.doRefresh = function() {
       getDataServ.refreshAllData().then(function() {
         // Stop the ion-refresher from spinning
-        $scope.title = app.customConfig.menulists[key];
-        $scope.data = getDataServ.getCtrlData(key);
-        $scope.$broadcast('scroll.refreshComplete');
+        vm.title = appParam.menulists[key];
+        vm.data = getDataServ.getCtrlData(key);
+        vm.$broadcast('scroll.refreshComplete');
       });
     };
-  })
-  .controller('sponsorCtrl', function($scope, getDataServ) {
+  }
+  function newsCtrl($scope, getDataServ, appParam) {
+    var vm = $scope;
+  }
+  function sponsorCtrl($scope, getDataServ, appParam) {
+    var vm = $scope;
     var key = "sponsor";
-    $scope.title = app.customConfig.menulists[key];
-    $scope.data = getDataServ.getCtrlData(key);
-    $scope.doRefresh = function() {
+    vm.title = appParam.menulists[key];
+    vm.data = getDataServ.getCtrlData(key);
+    vm.doRefresh = function() {
       getDataServ.refreshAllData().then(function() {
         // Stop the ion-refresher from spinning
-        $scope.title = app.customConfig.menulists[key];
-        $scope.data = getDataServ.getCtrlData(key);
-        $scope.$broadcast('scroll.refreshComplete');
+        vm.title = appParam.menulists[key];
+        vm.data = getDataServ.getCtrlData(key);
+        vm.$broadcast('scroll.refreshComplete');
       });
     };
-  })
-  .controller('locationCtrl', function($scope, getDataServ) {
+  }
+  function locationCtrl($scope, getDataServ, appParam) {
+    var vm = $scope;
     var key = "location";
-    $scope.title = app.customConfig.menulists[key];
-    $scope.data = getDataServ.getCtrlData(key);
-    $scope.doRefresh = function() {
+    vm.title = appParam.menulists[key];
+    vm.data = getDataServ.getCtrlData(key);
+    vm.doRefresh = function() {
       getDataServ.refreshAllData().then(function() {
         // Stop the ion-refresher from spinning
-        $scope.title = app.customConfig.menulists[key];
-        $scope.data = getDataServ.getCtrlData(key);
-        $scope.$broadcast('scroll.refreshComplete');
+        vm.title = appParam.menulists[key];
+        vm.data = getDataServ.getCtrlData(key);
+        vm.$broadcast('scroll.refreshComplete');
       });
     };
-  })
-  .controller('communityCtrl', function($scope, getDataServ) {
+  }
+  function communityCtrl($scope, getDataServ, appParam) {
+    var vm = $scope;
     var key = "community";
-    $scope.title = app.customConfig.menulists[key];
-    $scope.data = getDataServ.getCtrlData(key);
-    $scope.doRefresh = function() {
+    vm.title = appParam.menulists[key];
+    vm.data = getDataServ.getCtrlData(key);
+    vm.doRefresh = function() {
       getDataServ.refreshAllData().then(function() {
         // Stop the ion-refresher from spinning
-        $scope.title = app.customConfig.menulists[key];
-        $scope.data = getDataServ.getCtrlData(key);
-        $scope.$broadcast('scroll.refreshComplete');
+        vm.title = appParam.menulists[key];
+        vm.data = getDataServ.getCtrlData(key);
+        vm.$broadcast('scroll.refreshComplete');
       });
     };
-  });
+  }
+})();

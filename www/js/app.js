@@ -5,36 +5,14 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
+(function(){
 
-var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
-  .run(function($ionicPlatform) {
-    $ionicPlatform.ready(function() {
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
-      if (window.cordova && window.cordova.plugins.Keyboard) {
-        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      }
-      if (window.StatusBar) {
-        // org.apache.cordova.statusbar required
-        StatusBar.styleDefault();
-      }
-    });
-  })
+  angular
+    .module('mopconApp', ['ionic', 'mopconApp.controllers', 'mopconApp.services', 'mopconApp.values'])
+    .config(['$stateProvider', '$urlRouterProvider', 'appParam', appConfigFn])
+    .run(['$ionicPlatform', appRunFn]);
 
-  .config(function($stateProvider, $urlRouterProvider) {
-    app.customConfig = {};
-    //與後端 json 對應的版本控制
-    app.customConfig.version = 2;
-    //選單列表(白名單)，實際顯示的選單由 json 控制
-    app.customConfig.menulists = {
-      "news":"即時訊息",
-      "session":"議程",
-      "sponsor":"贊助",
-      "speaker":"講者",
-      "location":"交通指南",
-      "community":"社群"
-    };
-
+  function appConfigFn($stateProvider, $urlRouterProvider, appParam) {
     $stateProvider
       .state('app', {
         url: "/app",
@@ -51,7 +29,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
           }
         }
       });
-    for(var key in app.customConfig.menulists)
+    for(var key in appParam.menulists)
     {
       if(key == 'app') { //以防萬一
         continue;
@@ -71,4 +49,20 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
     }
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/location');
-  });
+  }
+
+  function appRunFn($ionicPlatform) {
+    $ionicPlatform.ready(function() {
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      if (window.cordova && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      }
+      if (window.StatusBar) {
+        // org.apache.cordova.statusbar required
+        StatusBar.styleDefault();
+      }
+    });
+  }
+})();
+  
